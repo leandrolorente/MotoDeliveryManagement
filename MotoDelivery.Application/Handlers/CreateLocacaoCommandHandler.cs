@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MotoDelivery.Application.Commands;
+using MotoDelivery.Application.Interfaces;
 using MotoDelivery.Domain.Entities.MotoDelivery.Domain.Entities;
-using MotoDelivery.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

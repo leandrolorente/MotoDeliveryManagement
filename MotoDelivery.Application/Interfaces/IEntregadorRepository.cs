@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MotoDelivery.Domain.Interfaces
+namespace MotoDelivery.Application.Interfaces
 {
     public interface IEntregadorRepository
     {
@@ -14,5 +14,10 @@ namespace MotoDelivery.Domain.Interfaces
         Task AddAsync(Entregador entregador);
         Task UpdateAsync(Entregador entregador);
         Task DeleteAsync(Guid id);
+        // Retorna um Entregador ou null se não for encontrado
+        Task<Entregador?> GetByCnpjAsync(string cnpj);
+
+        // Retorna um Entregador ou null se não for encontrado
+        Task<Entregador?> GetByCnhAsync(string numeroCnh);
     }
 }

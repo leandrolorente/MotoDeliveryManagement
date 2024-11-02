@@ -1,4 +1,4 @@
-﻿namespace MotoDelivery.Domain.Interfaces
+﻿namespace MotoDelivery.Application.Interfaces
 {
     /// <summary>
     /// Interface que define o contrato para um barramento de mensagens.

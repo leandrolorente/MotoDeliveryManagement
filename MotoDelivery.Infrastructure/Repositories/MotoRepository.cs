@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MotoDelivery.Application.Interfaces;
 using MotoDelivery.Domain.Entities;
-using MotoDelivery.Infrastructure.Interfaces;
 using MotoDelivery.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
@@ -50,6 +50,16 @@ namespace MotoDelivery.Infrastructure.Repositories
         public async Task<IEnumerable<Moto>> GetAllAsync()
         {
             return await _context.Motos.ToListAsync();
+        }
+
+        Task<List<Moto>> IMotoRepository.GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Moto>> IMotoRepository.GetByPlacaAsync(string placa)
+        {
+            throw new NotImplementedException();
         }
     }
 }

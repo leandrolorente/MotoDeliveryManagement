@@ -1,4 +1,4 @@
-﻿using MotoDelivery.Domain.Interfaces;
+﻿using MotoDelivery.Application.Interfaces;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;

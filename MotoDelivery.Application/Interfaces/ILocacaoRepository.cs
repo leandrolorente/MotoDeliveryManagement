@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MotoDelivery.Domain.Interfaces
+namespace MotoDelivery.Application.Interfaces
 {
     public interface ILocacaoRepository
     {

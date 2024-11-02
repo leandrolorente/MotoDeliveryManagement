@@ -1,10 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MotoDelivery.Application.Commands;
+using MotoDelivery.Application.Queries.LocacaoQueries;
+using MotoDelivery.Application.Requests.LocacaoRequests;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MotoDelivery.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("locacao")]
+    [Tags("locação")]
     public class LocacaoController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,10 +25,11 @@ namespace MotoDelivery.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostLocacao([FromBody] LocacaoRequest request)
+        [SwaggerOperation(Summary = "Alugar uma moto")]
+        public async Task<IActionResult> PostLocacao([FromBody] RegistrarLocacaoRequest request)
         {
-            var response = await _mediator.Send(new RegistrarLocacaoCommand(request));
-            if (response.Sucesso)
+            var response = await _mediator.Send(new CreateLocacaoCommand(request));
+            if (response != Guid.Empty)
                 return StatusCode(StatusCodes.Status201Created);
 
             return BadRequest(new { mensagem = "Dados inválidos" });
@@ -33,9 +39,15 @@ namespace MotoDelivery.API.Controllers
         /// Consultar locação por id
         /// </summary>
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Consultar locação por id")]
         public async Task<IActionResult> GetLocacaoById(string id)
         {
-            var locacao = await _mediator.Send(new ConsultarLocacaoPorIdQuery(id));
+            if (!Guid.TryParse(id, out var locacaoId))
+            {
+                // Retorna BadRequest se o id não for um Guid válido
+                return BadRequest(new { mensagem = "ID inválido. O ID deve ser um GUID válido." });
+            }
+            var locacao = await _mediator.Send(new ConsultarLocacaoPorIdQuery(locacaoId));
             if (locacao == null)
                 return NotFound(new { mensagem = "Locação não encontrada" });
 
@@ -46,10 +58,16 @@ namespace MotoDelivery.API.Controllers
         /// Informar data de devolução da locação
         /// </summary>
         [HttpPut("{id}/devolucao")]
-        public async Task<IActionResult> DevolverLocacao(string id, [FromBody] LocacaoRequest request)
+        [SwaggerOperation(Summary = "Informar data de devolução e calcular valor")]
+        public async Task<IActionResult> DevolverLocacao(string id, [FromBody] InformarDevolucaoRequest request)
         {
-            var response = await _mediator.Send(new InformarDevolucaoCommand(id, request.DataDevolucao));
-            if (response.Sucesso)
+            if (!Guid.TryParse(id, out var devolucaoId))
+            {
+                // Retorna BadRequest se o id não for um Guid válido
+                return BadRequest(new { mensagem = "ID inválido. O ID deve ser um GUID válido." });
+            }
+            var response = await _mediator.Send(new InformarDevolucaoCommand(devolucaoId, request.DataDevolucao));
+            if (response)
                 return Ok(new { mensagem = "Data de devolução informada com sucesso" });
 
             return BadRequest(new { mensagem = "Dados inválidos" });

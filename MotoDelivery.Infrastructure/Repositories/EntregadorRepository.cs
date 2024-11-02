@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MotoDelivery.Application.Interfaces;
 using MotoDelivery.Domain.Entities;
-using MotoDelivery.Domain.Interfaces;
 using MotoDelivery.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
@@ -49,6 +49,16 @@ namespace MotoDelivery.Infrastructure.Repositories
                 _context.Entregadores.Remove(entregador);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public Task<Entregador?> GetByCnpjAsync(string cnpj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Entregador?> GetByCnhAsync(string numeroCnh)
+        {
+            throw new NotImplementedException();
         }
     }
 }

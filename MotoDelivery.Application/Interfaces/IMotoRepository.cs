@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MotoDelivery.Infrastructure.Interfaces
+namespace MotoDelivery.Application.Interfaces
 {
     public interface IMotoRepository
     {
         Task<Moto> GetByIdAsync(Guid id);
-        Task<Moto> GetByPlacaAsync(string placa);
         Task AddAsync(Moto moto);
         Task UpdateAsync(Moto moto);
         Task DeleteAsync(Moto moto);
-        Task<IEnumerable<Moto>> GetAllAsync();
+        Task<List<Moto>> GetAllAsync();
+        Task<List<Moto>> GetByPlacaAsync(string placa);
     }
 }

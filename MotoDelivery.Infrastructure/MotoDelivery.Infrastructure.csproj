@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MotoDelivery.Domain\MotoDelivery.Domain.csproj" />
+    <ProjectReference Include="..\MotoDelivery.Application\MotoDelivery.Application.csproj" />
   </ItemGroup>
 
 </Project>

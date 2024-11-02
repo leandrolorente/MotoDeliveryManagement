@@ -13,12 +13,13 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MotoDelivery.Infrastructure\MotoDelivery.Infrastructure.csproj" />
+    <ProjectReference Include="..\MotoDelivery.Domain\MotoDelivery.Domain.csproj" />
   </ItemGroup>
 
 </Project>

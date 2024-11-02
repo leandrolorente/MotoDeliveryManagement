@@ -1,6 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MotoDelivery.Domain.Interfaces;
-using MotoDelivery.Infrastructure.Interfaces;
+using Microsoft.OpenApi.Models;
+using MotoDelivery.Application.Interfaces;
 using MotoDelivery.Infrastructure.Messages;
 using MotoDelivery.Infrastructure.Persistence;
 using MotoDelivery.Infrastructure.Repositories;
@@ -24,7 +25,12 @@ builder.Services.AddScoped<ILocacaoRepository, LocacaoRepository>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+
+    // Habilita o uso de anotações (como [SwaggerOperation])
+    c.EnableAnnotations();
+});
 
 var app = builder.Build();
 

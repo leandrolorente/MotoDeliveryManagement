@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MotoDelivery.Application.Interfaces;
 using MotoDelivery.Domain.Entities.MotoDelivery.Domain.Entities;
-using MotoDelivery.Domain.Interfaces;
 using MotoDelivery.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
