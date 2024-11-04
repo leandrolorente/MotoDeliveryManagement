@@ -1,8 +1,6 @@
 ﻿using MotoDelivery.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MotoDelivery.Application.Interfaces
@@ -14,6 +12,8 @@ namespace MotoDelivery.Application.Interfaces
         Task UpdateAsync(Moto moto);
         Task DeleteAsync(Moto moto);
         Task<List<Moto>> GetAllAsync();
-        Task<List<Moto>> GetByPlacaAsync(string placa);
+
+        // Mantemos o retorno de uma única Moto, pois placa deve ser única.
+        Task<Moto> GetByPlacaAsync(string placa);
     }
 }

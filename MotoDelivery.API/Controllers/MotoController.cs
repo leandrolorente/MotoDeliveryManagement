@@ -52,9 +52,9 @@ namespace MotoDelivery.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [SwaggerOperation(Summary = "Consultar motos existentes")]
-        public async Task<IActionResult> GetMotos([FromQuery] string placa)
+        public async Task<IActionResult> GetMotos()
         {
-            var motos = await _mediator.Send(new ConsultarMotosQuery(placa));
+            var motos = await _mediator.Send(new ConsultarMotosQuery(""));
             return Ok(motos);
         }
 
@@ -63,7 +63,7 @@ namespace MotoDelivery.API.Controllers
         /// </summary>
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Consultar motos existentes por id")]
-        public async Task<IActionResult> GetMotoById(string id)
+        public async Task<IActionResult> GetMotoById(Guid id)
         {
             var moto = await _mediator.Send(new ConsultarMotoPorIdQuery(id));
             if (moto == null)
@@ -82,7 +82,7 @@ namespace MotoDelivery.API.Controllers
             if (!Guid.TryParse(id, out Guid motoId))
             {
                 // Retorna um erro 400 se o formato do id for inválido
-                return BadRequest(new { mensagem = "ID inválido. O formato do ID deve ser um GUID válido." });
+                return BadRequest(new { mensagem = "Dados inválidos" });
             }
             var response = await _mediator.Send(new UpdateMotoPlacaCommand(motoId, request.Placa));
             if (response.Sucesso)
@@ -96,7 +96,7 @@ namespace MotoDelivery.API.Controllers
         /// </summary>
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Remover uma moto")]
-        public async Task<IActionResult> DeleteMoto(string id)
+        public async Task<IActionResult> DeleteMoto(Guid id)
         {
             var response = await _mediator.Send(new RemoverMotoCommand(id));
             if (response)

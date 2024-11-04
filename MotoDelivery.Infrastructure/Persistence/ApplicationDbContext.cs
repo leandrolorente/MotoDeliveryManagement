@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MotoDelivery.Domain.Entities.MotoDelivery.Domain.Entities;
 using MotoDelivery.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MotoDelivery.Domain.Entities.MotoDelivery.Domain.Entities;
 
 namespace MotoDelivery.Infrastructure.Persistence
 {
@@ -23,18 +18,53 @@ namespace MotoDelivery.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configurações adicionais (constrangimentos, índices, etc.)
-            modelBuilder.Entity<Moto>()
-                .HasIndex(m => m.Placa)
-                .IsUnique(); // A placa deve ser única
+            // Configuração da Moto
+            modelBuilder.Entity<Moto>(entity =>
+            {
+                entity.HasKey(m => m.Id);
+                entity.Property(m => m.Identificador).IsRequired();
+                entity.Property(m => m.Ano).IsRequired();
+                entity.Property(m => m.Modelo).IsRequired();
+                entity.Property(m => m.Placa).IsRequired();
+                entity.HasIndex(m => m.Placa).IsUnique();
 
-            modelBuilder.Entity<Entregador>()
-                .HasIndex(e => e.Cnpj)
-                .IsUnique(); // O CNPJ deve ser único
+             
+            });
 
-            modelBuilder.Entity<Entregador>()
-                .HasIndex(e => e.NumeroCnh)
-                .IsUnique(); // O número da CNH deve ser único
+            // Configuração do Entregador
+            modelBuilder.Entity<Entregador>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Identificador).IsRequired();
+                entity.Property(e => e.Nome).IsRequired();
+                entity.Property(e => e.Cnpj).IsRequired();
+                entity.Property(e => e.DataNascimento).IsRequired();
+                entity.Property(e => e.NumeroCnh).IsRequired();
+                entity.Property(e => e.TipoCnh).IsRequired();
+
+                entity.HasIndex(e => e.Cnpj).IsUnique(); // CNPJ único
+                entity.HasIndex(e => e.NumeroCnh).IsUnique(); // CNH única
+            });
+
+            // Configuração da Locacao
+            modelBuilder.Entity<Locacao>(entity =>
+            {
+                entity.HasKey(l => l.Id);
+                entity.Property(l => l.DataInicio).IsRequired();
+                entity.Property(l => l.DataTermino).IsRequired();
+                entity.Property(l => l.DataPrevisaoTermino).IsRequired();
+                entity.Property(l => l.Plano).IsRequired();
+
+                entity.HasOne(l => l.Entregador)
+                      .WithMany()
+                      .HasForeignKey(l => l.EntregadorId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(l => l.Moto)
+                      .WithMany()
+                      .HasForeignKey(l => l.MotoId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
 }

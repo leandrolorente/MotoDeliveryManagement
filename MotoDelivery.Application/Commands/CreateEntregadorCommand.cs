@@ -21,7 +21,7 @@ namespace MotoDelivery.Application.Commands
         {
             Identificador = Guid.NewGuid().ToString();  // Gera um novo identificador
             Nome = request.Nome;
-            Cnpj = request.CNPJ;
+            Cnpj = request.Cnpj;
             DataNascimento = request.DataNascimento;
             NumeroCnh = request.NumeroCNH;
             TipoCnh = request.TipoCNH;

@@ -18,7 +18,8 @@ namespace MotoDelivery.Domain.Entities
             public DateTime DataPrevisaoTermino { get; private set; }
             public DateTime? DataDevolucao { get; private set; }
             public int Plano { get; private set; }
-
+            public Entregador Entregador { get; private set; }
+            public Moto Moto { get; private set; }
             public Locacao(Guid entregadorId, Guid motoId, DateTime dataInicio, DateTime dataTermino, DateTime dataPrevisaoTermino, int plano)
             {
                 Id = Guid.NewGuid();
@@ -37,8 +38,38 @@ namespace MotoDelivery.Domain.Entities
 
             public decimal CalcularValorTotal()
             {
-                // Logic for calculating total rental value
-                return 0; // Placeholder
+                decimal valorDiaria = Plano switch
+                {
+                    7 => 30,
+                    15 => 28,
+                    30 => 22,
+                    45 => 20,
+                    50 => 18,
+                    _ => throw new InvalidOperationException("Plano inválido")
+                };
+
+                // Se a data de devolução for anterior à prevista, aplica-se a multa
+                if (DataDevolucao.HasValue && DataDevolucao.Value < DataPrevisaoTermino)
+                {
+                    int diasNaoEfetivados = (DataPrevisaoTermino - DataDevolucao.Value).Days;
+                    decimal multa = Plano switch
+                    {
+                        7 => 0.20m,
+                        15 => 0.40m,
+                        _ => 0m, // Outros planos não têm multa adicional
+                    };
+
+                    return (DataDevolucao.Value - DataInicio).Days * valorDiaria + (diasNaoEfetivados * valorDiaria * multa);
+                }
+
+                // Se a data de devolução for posterior à prevista, aplica-se uma multa adicional por dia excedido
+                if (DataDevolucao.HasValue && DataDevolucao.Value > DataPrevisaoTermino)
+                {
+                    int diasExcedidos = (DataDevolucao.Value - DataPrevisaoTermino).Days;
+                    return (DataPrevisaoTermino - DataInicio).Days * valorDiaria + (diasExcedidos * 50); // Multa por dia adicional
+                }
+
+                return (DataPrevisaoTermino - DataInicio).Days * valorDiaria;
             }
         }
     }

@@ -4,8 +4,6 @@ using MotoDelivery.Domain.Entities;
 using MotoDelivery.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MotoDelivery.Infrastructure.Repositories
@@ -26,6 +24,7 @@ namespace MotoDelivery.Infrastructure.Repositories
 
         public async Task<Moto> GetByPlacaAsync(string placa)
         {
+            // Retorna a primeira moto que corresponde à placa.
             return await _context.Motos.FirstOrDefaultAsync(m => m.Placa == placa);
         }
 
@@ -47,19 +46,9 @@ namespace MotoDelivery.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Moto>> GetAllAsync()
+        public async Task<List<Moto>> GetAllAsync()
         {
             return await _context.Motos.ToListAsync();
-        }
-
-        Task<List<Moto>> IMotoRepository.GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<List<Moto>> IMotoRepository.GetByPlacaAsync(string placa)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace MotoDelivery.Application.Handlers.MotoHandlers
             }
 
             // Atualiza a placa da moto
-            moto.UpdatePlaca(request.NovaPlaca);
+            moto.UpdatePlaca(request.Placa);
 
             // Persistir a operação no repositório
             await _motoRepository.UpdateAsync(moto);

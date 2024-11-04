@@ -17,15 +17,15 @@ namespace MotoDelivery.Application.Handlers.MotoHandlers
 
         public async Task<List<Moto>> Handle(ConsultarMotosQuery request, CancellationToken cancellationToken)
         {
-            // Consultar motos filtrando pela placa no repositório
             if (string.IsNullOrEmpty(request.Placa))
             {
                 // Se a placa não foi fornecida, retornar todas as motos
                 return await _motoRepository.GetAllAsync();
             }
 
-            // Se a placa foi fornecida, retornar as motos que correspondem à placa
-            return await _motoRepository.GetByPlacaAsync(request.Placa);
+            // Se a placa foi fornecida, retornar a moto correspondente como uma lista
+            var moto = await _motoRepository.GetByPlacaAsync(request.Placa);
+            return moto != null ? new List<Moto> { moto } : new List<Moto>();
         }
     }
 }
