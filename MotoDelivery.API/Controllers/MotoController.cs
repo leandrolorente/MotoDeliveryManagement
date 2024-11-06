@@ -40,7 +40,7 @@ namespace MotoDelivery.API.Controllers
 
             // Enviar comando para cadastrar moto
             var response = await _mediator.Send(command);
-            if (response != Guid.Empty)
+            if (response != 0)
                 return StatusCode(StatusCodes.Status201Created);
 
             return BadRequest(new { mensagem = "Dados inválidos" });
@@ -52,9 +52,9 @@ namespace MotoDelivery.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [SwaggerOperation(Summary = "Consultar motos existentes")]
-        public async Task<IActionResult> GetMotos()
+        public async Task<IActionResult> GetMotos(string placa)
         {
-            var motos = await _mediator.Send(new ConsultarMotosQuery(""));
+            var motos = await _mediator.Send(new ConsultarMotosQuery(placa));
             return Ok(motos);
         }
 
@@ -63,7 +63,7 @@ namespace MotoDelivery.API.Controllers
         /// </summary>
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Consultar motos existentes por id")]
-        public async Task<IActionResult> GetMotoById(Guid id)
+        public async Task<IActionResult> GetMotoById(long id)
         {
             var moto = await _mediator.Send(new ConsultarMotoPorIdQuery(id));
             if (moto == null)
@@ -79,7 +79,7 @@ namespace MotoDelivery.API.Controllers
         [SwaggerOperation(Summary = "Modificar a placa de uma moto")]
         public async Task<IActionResult> UpdatePlacaMoto(string id, [FromBody] ModificarPlacaMotoRequest request)
         {
-            if (!Guid.TryParse(id, out Guid motoId))
+            if (!long.TryParse(id, out long motoId))
             {
                 // Retorna um erro 400 se o formato do id for inválido
                 return BadRequest(new { mensagem = "Dados inválidos" });
@@ -96,8 +96,9 @@ namespace MotoDelivery.API.Controllers
         /// </summary>
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Remover uma moto")]
-        public async Task<IActionResult> DeleteMoto(Guid id)
+        public async Task<IActionResult> DeleteMoto(long id)
         {
+            
             var response = await _mediator.Send(new RemoverMotoCommand(id));
             if (response)
                 return Ok();

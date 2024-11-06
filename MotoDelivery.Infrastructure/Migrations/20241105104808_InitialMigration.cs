@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,7 +16,8 @@ namespace MotoDelivery.Infrastructure.Migrations
                 name: "Entregadores",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Identificador = table.Column<string>(type: "text", nullable: false),
                     Nome = table.Column<string>(type: "text", nullable: false),
                     Cnpj = table.Column<string>(type: "text", nullable: false),
@@ -32,7 +34,8 @@ namespace MotoDelivery.Infrastructure.Migrations
                 name: "Motos",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Identificador = table.Column<string>(type: "text", nullable: false),
                     Ano = table.Column<int>(type: "integer", nullable: false),
                     Modelo = table.Column<string>(type: "text", nullable: false),
@@ -47,9 +50,10 @@ namespace MotoDelivery.Infrastructure.Migrations
                 name: "Locacoes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    EntregadorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    MotoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EntregadorId = table.Column<long>(type: "bigint", nullable: false),
+                    MotoId = table.Column<long>(type: "bigint", nullable: false),
                     DataInicio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DataTermino = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DataPrevisaoTermino = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -64,13 +68,13 @@ namespace MotoDelivery.Infrastructure.Migrations
                         column: x => x.EntregadorId,
                         principalTable: "Entregadores",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Locacoes_Motos_MotoId",
                         column: x => x.MotoId,
                         principalTable: "Motos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

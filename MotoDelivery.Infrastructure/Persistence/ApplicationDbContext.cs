@@ -22,19 +22,23 @@ namespace MotoDelivery.Infrastructure.Persistence
             modelBuilder.Entity<Moto>(entity =>
             {
                 entity.HasKey(m => m.Id);
+                entity.Property(m => m.Id)
+                      .UseIdentityColumn(); // Configura como auto-incremento (BIGSERIAL no PostgreSQL)
+
                 entity.Property(m => m.Identificador).IsRequired();
                 entity.Property(m => m.Ano).IsRequired();
                 entity.Property(m => m.Modelo).IsRequired();
                 entity.Property(m => m.Placa).IsRequired();
                 entity.HasIndex(m => m.Placa).IsUnique();
-
-             
             });
 
             // Configuração do Entregador
             modelBuilder.Entity<Entregador>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                      .UseIdentityColumn(); // Configura como auto-incremento (BIGSERIAL no PostgreSQL)
+
                 entity.Property(e => e.Identificador).IsRequired();
                 entity.Property(e => e.Nome).IsRequired();
                 entity.Property(e => e.Cnpj).IsRequired();
@@ -50,6 +54,9 @@ namespace MotoDelivery.Infrastructure.Persistence
             modelBuilder.Entity<Locacao>(entity =>
             {
                 entity.HasKey(l => l.Id);
+                entity.Property(l => l.Id)
+                      .UseIdentityColumn(); // Configura como auto-incremento (BIGSERIAL no PostgreSQL)
+
                 entity.Property(l => l.DataInicio).IsRequired();
                 entity.Property(l => l.DataTermino).IsRequired();
                 entity.Property(l => l.DataPrevisaoTermino).IsRequired();
@@ -58,12 +65,12 @@ namespace MotoDelivery.Infrastructure.Persistence
                 entity.HasOne(l => l.Entregador)
                       .WithMany()
                       .HasForeignKey(l => l.EntregadorId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                      .OnDelete(DeleteBehavior.Cascade); // Ajuste conforme necessidade
 
                 entity.HasOne(l => l.Moto)
                       .WithMany()
                       .HasForeignKey(l => l.MotoId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                      .OnDelete(DeleteBehavior.Cascade); // Ajuste conforme necessidade
             });
         }
     }

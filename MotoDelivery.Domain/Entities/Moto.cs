@@ -8,7 +8,7 @@ namespace MotoDelivery.Domain.Entities
 {
     public class Moto
     {
-        public Guid Id { get; private set; }
+        public long Id { get; private set; }
         public string Identificador { get; private set; }
         public int Ano { get; private set; }
         public string Modelo { get; private set; }
@@ -16,7 +16,6 @@ namespace MotoDelivery.Domain.Entities
 
         public Moto(string identificador, int ano, string modelo, string placa)
         {
-            Id = Guid.NewGuid();
             Identificador = identificador;
             Ano = ano;
             Modelo = modelo;

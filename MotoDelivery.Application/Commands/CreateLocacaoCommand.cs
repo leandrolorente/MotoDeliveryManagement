@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MotoDelivery.Application.Commands
 {
 
-    public class CreateLocacaoCommand : IRequest<Guid>
+    public class CreateLocacaoCommand : IRequest<long>
     {
 
         public CreateLocacaoCommand(RegistrarLocacaoRequest request)
@@ -22,8 +22,8 @@ namespace MotoDelivery.Application.Commands
             Plano = request.Plano;
         }
 
-        public string EntregadorId { get; set; }
-        public string MotoId { get; set; }
+        public long EntregadorId { get; set; }
+        public long MotoId { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataTermino { get; set; }
         public DateTime DataPrevisaoTermino { get; set; }

@@ -24,9 +24,11 @@ namespace MotoDelivery.Infrastructure.Migrations
 
             modelBuilder.Entity("MotoDelivery.Domain.Entities.Entregador", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Cnpj")
                         .IsRequired()
@@ -64,9 +66,11 @@ namespace MotoDelivery.Infrastructure.Migrations
 
             modelBuilder.Entity("MotoDelivery.Domain.Entities.Moto", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Ano")
                         .HasColumnType("integer");
@@ -93,9 +97,11 @@ namespace MotoDelivery.Infrastructure.Migrations
 
             modelBuilder.Entity("MotoDelivery.Domain.Entities.MotoDelivery.Domain.Entities.Locacao", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime?>("DataDevolucao")
                         .HasColumnType("timestamp with time zone");
@@ -109,11 +115,11 @@ namespace MotoDelivery.Infrastructure.Migrations
                     b.Property<DateTime>("DataTermino")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("EntregadorId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("EntregadorId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("MotoId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("MotoId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Plano")
                         .HasColumnType("integer");
@@ -132,13 +138,13 @@ namespace MotoDelivery.Infrastructure.Migrations
                     b.HasOne("MotoDelivery.Domain.Entities.Entregador", "Entregador")
                         .WithMany()
                         .HasForeignKey("EntregadorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MotoDelivery.Domain.Entities.Moto", "Moto")
                         .WithMany()
                         .HasForeignKey("MotoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Entregador");

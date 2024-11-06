@@ -19,7 +19,7 @@ namespace MotoDelivery.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Locacao> GetByIdAsync(Guid id)
+        public async Task<Locacao> GetByIdAsync(long id)
         {
             return await _context.Locacoes.FindAsync(id);
         }
@@ -41,7 +41,7 @@ namespace MotoDelivery.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(long id)
         {
             var locacao = await _context.Locacoes.FindAsync(id);
             if (locacao != null)

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MotoDelivery.Application.Handlers
 {
-        public class CreateEntregadorCommandHandler : IRequestHandler<CreateEntregadorCommand, Guid>
+        public class CreateEntregadorCommandHandler : IRequestHandler<CreateEntregadorCommand, long>
         {
             private readonly IEntregadorRepository _entregadorRepository;
 
@@ -19,7 +19,7 @@ namespace MotoDelivery.Application.Handlers
                 _entregadorRepository = entregadorRepository;
             }
 
-            public async Task<Guid> Handle(CreateEntregadorCommand request, CancellationToken cancellationToken)
+            public async Task<long> Handle(CreateEntregadorCommand request, CancellationToken cancellationToken)
             {
                 // Validate unique CNPJ and CNH
                 var existingCnpj = await _entregadorRepository.GetByCnpjAsync(request.Cnpj);

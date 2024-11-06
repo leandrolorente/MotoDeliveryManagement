@@ -28,7 +28,7 @@ namespace MotoDelivery.API.Controllers
         public async Task<IActionResult> PostEntregador([FromBody] CadastrarEntregadorRequest request)
         {
             var response = await _mediator.Send(new CreateEntregadorCommand(request));
-            if (response != Guid.Empty)
+            if (response != 0)
                 return StatusCode(StatusCodes.Status201Created);
 
             return BadRequest(new { mensagem = "Dados inválidos" });
@@ -39,12 +39,12 @@ namespace MotoDelivery.API.Controllers
         /// </summary>
         [HttpPost("{id}/cnh")]
         [SwaggerOperation(Summary = "Enviar foto CNH")]
-        public async Task<IActionResult> PostFotoCNH(string id, [FromBody] EnviarFotoCNHRequest request)
+        public async Task<IActionResult> PostFotoCNH(long id, [FromBody] EnviarFotoCNHRequest request)
         {
-            if (!Guid.TryParse(id, out var entregadorId))
+          /*  if (!long.TryParse(id, out var entregadorId))
             {
                 return BadRequest(new { mensagem = "ID inválido. O ID deve ser um GUID válido." });
-            }
+            }*/
 
             // Verifica se o arquivo foi enviado
             if (request.ImagemCNH == null || request.ImagemCNH.Length == 0)
@@ -52,7 +52,7 @@ namespace MotoDelivery.API.Controllers
                 return BadRequest(new { mensagem = "Arquivo de imagem inválido ou não enviado." });
             }
 
-            var response = await _mediator.Send(new EnviarFotoCNHCommand(entregadorId, request.ImagemCNH));
+            var response = await _mediator.Send(new EnviarFotoCNHCommand(id, request.ImagemCNH));
             if (response)
                 return Ok();
 

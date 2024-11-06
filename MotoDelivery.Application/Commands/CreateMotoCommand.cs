@@ -8,7 +8,7 @@ using MotoDelivery.Application.Responses;
 
 namespace MotoDelivery.Application.Commands
 {
-    public class CreateMotoCommand : IRequest<Guid>
+    public class CreateMotoCommand : IRequest<long>
     {
         public string Identificador { get; set; }
         public int Ano { get; set; }

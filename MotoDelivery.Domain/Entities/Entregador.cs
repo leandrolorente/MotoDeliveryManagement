@@ -8,7 +8,7 @@ namespace MotoDelivery.Domain.Entities
 {
     public class Entregador
     {
-        public Guid Id { get; private set; }
+        public long Id { get; private set; } // Alterado de long para long
         public string Identificador { get; private set; }
         public string Nome { get; private set; }
         public string Cnpj { get; private set; }
@@ -18,7 +18,7 @@ namespace MotoDelivery.Domain.Entities
 
         public Entregador(string identificador, string nome, string cnpj, DateTime dataNascimento, string numeroCnh, string tipoCnh)
         {
-            Id = Guid.NewGuid();
+            // Id será gerado pelo banco, então não precisa ser atribuído aqui
             Identificador = identificador;
             Nome = nome;
             Cnpj = cnpj;
@@ -29,7 +29,7 @@ namespace MotoDelivery.Domain.Entities
 
         public void UpdateCnhImage(string imageUrl)
         {
-            // Logic to update CNH image URL
+            // Lógica para atualizar a URL da imagem da CNH
         }
     }
 }

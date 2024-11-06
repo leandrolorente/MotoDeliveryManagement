@@ -17,7 +17,7 @@ namespace MotoDelivery.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Moto> GetByIdAsync(Guid id)
+        public async Task<Moto> GetByIdAsync(long id)
         {
             return await _context.Motos.FindAsync(id);
         }

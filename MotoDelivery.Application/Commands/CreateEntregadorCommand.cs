@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MotoDelivery.Application.Commands
 {
-    public class CreateEntregadorCommand : IRequest<Guid>
+    public class CreateEntregadorCommand : IRequest<long>
     {
         public string Identificador { get; set; }
         public string Nome { get; set; }
@@ -19,7 +19,7 @@ namespace MotoDelivery.Application.Commands
 
         public CreateEntregadorCommand(CadastrarEntregadorRequest request)
         {
-            Identificador = Guid.NewGuid().ToString();  // Gera um novo identificador
+            Identificador = request.Identificador;
             Nome = request.Nome;
             Cnpj = request.Cnpj;
             DataNascimento = request.DataNascimento;

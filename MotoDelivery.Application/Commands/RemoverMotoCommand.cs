@@ -9,9 +9,9 @@ namespace MotoDelivery.Application.Commands
 {
     public class RemoverMotoCommand : IRequest<bool>
     {
-        public Guid Id { get; private set; }
+        public long Id { get; private set; }
 
-        public RemoverMotoCommand(Guid id)
+        public RemoverMotoCommand(long id)
         {
             Id = id;
         }

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace MotoDelivery.Application.Handlers.MotoHandlers
 {
 
-    public class CreateMotoCommandHandler : IRequestHandler<CreateMotoCommand, Guid>
+    public class CreateMotoCommandHandler : IRequestHandler<CreateMotoCommand, long>
     {
         private readonly IMotoRepository _motoRepository;
         private readonly IMessageBus _messageBus;
@@ -24,7 +24,7 @@ namespace MotoDelivery.Application.Handlers.MotoHandlers
             _messageBus = messageBus;
         }
 
-        public async Task<Guid> Handle(CreateMotoCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(CreateMotoCommand request, CancellationToken cancellationToken)
         {
             // Validate unique placa
             var existingMoto = await _motoRepository.GetByPlacaAsync(request.Placa);

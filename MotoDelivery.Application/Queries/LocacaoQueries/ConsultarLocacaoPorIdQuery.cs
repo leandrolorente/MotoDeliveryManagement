@@ -10,13 +10,13 @@ namespace MotoDelivery.Application.Queries.LocacaoQueries
 {
     public class ConsultarLocacaoPorIdQuery : IRequest<LocacaoDTO>
     {
-        public Guid LocacaoId { get; private set; }
+        public long LocacaoId { get; private set; }
 
         /// <summary>
         /// Construtor da query para buscar locação pelo ID.
         /// </summary>
         /// <param name="locacaoId">Identificador único da locação</param>
-        public ConsultarLocacaoPorIdQuery(Guid locacaoId)
+        public ConsultarLocacaoPorIdQuery(long locacaoId)
         {
             LocacaoId = locacaoId;
         }

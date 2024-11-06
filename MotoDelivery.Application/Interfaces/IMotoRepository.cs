@@ -7,7 +7,7 @@ namespace MotoDelivery.Application.Interfaces
 {
     public interface IMotoRepository
     {
-        Task<Moto> GetByIdAsync(Guid id);
+        Task<Moto> GetByIdAsync(long id);
         Task AddAsync(Moto moto);
         Task UpdateAsync(Moto moto);
         Task DeleteAsync(Moto moto);

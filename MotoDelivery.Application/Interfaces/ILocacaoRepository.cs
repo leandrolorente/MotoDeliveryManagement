@@ -9,10 +9,10 @@ namespace MotoDelivery.Application.Interfaces
 {
     public interface ILocacaoRepository
     {
-        Task<Locacao> GetByIdAsync(Guid id);
+        Task<Locacao> GetByIdAsync(long id);
         Task<List<Locacao>> GetAllAsync();
         Task AddAsync(Locacao locacao);
         Task UpdateAsync(Locacao locacao);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(long id);
     }
 }

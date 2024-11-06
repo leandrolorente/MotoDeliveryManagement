@@ -27,9 +27,9 @@ namespace MotoDelivery.Application.Handlers
 
             // Mapeando a entidade Locacao para LocacaoDTO
             return new LocacaoDTO(
-                identificador: locacao.Id.ToString(), // Convertendo Guid para string
-                entregadorId: locacao.EntregadorId.ToString(), // Convertendo Guid para string
-                motoId: locacao.MotoId.ToString(), // Convertendo Guid para string
+                identificador: locacao.Id.ToString(), // Convertendo long para string
+                entregadorId: locacao.EntregadorId.ToString(), // Convertendo long para string
+                motoId: locacao.MotoId.ToString(), // Convertendo long para string
                 dataInicio: locacao.DataInicio,
                 dataTermino: locacao.DataTermino, // Caso nulo, retorna valor padrão
                 dataPrevisaoTermino: locacao.DataPrevisaoTermino,

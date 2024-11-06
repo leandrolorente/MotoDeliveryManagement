@@ -10,9 +10,9 @@ namespace MotoDelivery.Domain.Entities
     {
         public class Locacao
         {
-            public Guid Id { get; private set; }
-            public Guid EntregadorId { get; private set; }
-            public Guid MotoId { get; private set; }
+            public long Id { get; private set; } // Alterado de long para long
+            public long EntregadorId { get; private set; } // Alterado de long para long
+            public long MotoId { get; private set; }
             public DateTime DataInicio { get; private set; }
             public DateTime DataTermino { get; private set; }
             public DateTime DataPrevisaoTermino { get; private set; }
@@ -20,9 +20,9 @@ namespace MotoDelivery.Domain.Entities
             public int Plano { get; private set; }
             public Entregador Entregador { get; private set; }
             public Moto Moto { get; private set; }
-            public Locacao(Guid entregadorId, Guid motoId, DateTime dataInicio, DateTime dataTermino, DateTime dataPrevisaoTermino, int plano)
+            public Locacao(long entregadorId, long motoId, DateTime dataInicio, DateTime dataTermino, DateTime dataPrevisaoTermino, int plano, long id = 0)
             {
-                Id = Guid.NewGuid();
+                Id = id;
                 EntregadorId = entregadorId;
                 MotoId = motoId;
                 DataInicio = dataInicio;
@@ -69,6 +69,7 @@ namespace MotoDelivery.Domain.Entities
                     return (DataPrevisaoTermino - DataInicio).Days * valorDiaria + (diasExcedidos * 50); // Multa por dia adicional
                 }
 
+                // Cálculo normal se a devolução for na data prevista
                 return (DataPrevisaoTermino - DataInicio).Days * valorDiaria;
             }
         }

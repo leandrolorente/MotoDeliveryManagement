@@ -19,7 +19,7 @@ namespace MotoDelivery.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Entregador> GetByIdAsync(Guid id)
+        public async Task<Entregador> GetByIdAsync(long id)
         {
             return await _context.Entregadores.FindAsync(id);
         }
@@ -41,7 +41,7 @@ namespace MotoDelivery.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(long id)
         {
             var entregador = await _context.Entregadores.FindAsync(id);
             if (entregador != null)
@@ -51,14 +51,25 @@ namespace MotoDelivery.Infrastructure.Repositories
             }
         }
 
-        public Task<Entregador?> GetByCnpjAsync(string cnpj)
+        public async Task<Entregador?> GetByCnpjAsync(string cnpj)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(cnpj))
+                throw new ArgumentException("O CNPJ não pode ser nulo ou vazio.", nameof(cnpj));
+
+            return await _context.Entregadores
+                                 .AsNoTracking()
+                                 .FirstOrDefaultAsync(e => e.Cnpj == cnpj);
         }
 
-        public Task<Entregador?> GetByCnhAsync(string numeroCnh)
+        public async Task<Entregador?> GetByCnhAsync(string numeroCnh)
         {
-            throw new NotImplementedException();
+            if(string.IsNullOrWhiteSpace(numeroCnh))
+                throw new ArgumentException("O número da CNH não pode ser nulo ou vazio.", nameof(numeroCnh));
+
+            return await _context.Entregadores
+                                 .AsNoTracking()
+                                 .FirstOrDefaultAsync(e => e.NumeroCnh == numeroCnh);
         }
+    
     }
 }

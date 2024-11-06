@@ -11,9 +11,9 @@ namespace MotoDelivery.Application.Queries.MotoQueries
 {
     public class ConsultarMotoPorIdQuery : IRequest<Moto>
     {
-        public Guid Id { get; private set; }
+        public long Id { get; private set; }
 
-        public ConsultarMotoPorIdQuery(Guid id)
+        public ConsultarMotoPorIdQuery(long id)
         {
             Id = id;
         }

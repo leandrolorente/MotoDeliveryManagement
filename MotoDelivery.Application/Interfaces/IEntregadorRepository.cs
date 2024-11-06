@@ -9,11 +9,11 @@ namespace MotoDelivery.Application.Interfaces
 {
     public interface IEntregadorRepository
     {
-        Task<Entregador> GetByIdAsync(Guid id);
+        Task<Entregador> GetByIdAsync(long id);
         Task<List<Entregador>> GetAllAsync();
         Task AddAsync(Entregador entregador);
         Task UpdateAsync(Entregador entregador);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(long id);
         // Retorna um Entregador ou null se não for encontrado
         Task<Entregador?> GetByCnpjAsync(string cnpj);
 

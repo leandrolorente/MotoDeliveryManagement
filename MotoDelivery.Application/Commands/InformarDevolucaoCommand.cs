@@ -8,7 +8,7 @@ namespace MotoDelivery.Application.Commands
     /// </summary>
     public class InformarDevolucaoCommand : IRequest<bool>
     {
-        public Guid LocacaoId { get; private set; }
+        public long LocacaoId { get; private set; }
         public DateTime DataDevolucao { get; private set; }
 
         /// <summary>
@@ -16,7 +16,7 @@ namespace MotoDelivery.Application.Commands
         /// </summary>
         /// <param name="locacaoId">Identificador da locação</param>
         /// <param name="dataDevolucao">Data da devolução</param>
-        public InformarDevolucaoCommand(Guid locacaoId, DateTime dataDevolucao)
+        public InformarDevolucaoCommand(long locacaoId, DateTime dataDevolucao)
         {
             LocacaoId = locacaoId;
             DataDevolucao = dataDevolucao;
